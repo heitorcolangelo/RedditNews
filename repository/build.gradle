@@ -1,0 +1,94 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'org.jetbrains.kotlin.android.extensions'
+apply from: "$rootDir/tools/tools.gradle"
+
+androidExtensions {
+    experimental = true
+}
+
+kapt {
+    correctErrorTypes = true
+}
+
+android {
+    def baseUrl = [
+            debug  : '"https://www.reddit.com/"',
+            release: '" https://www.reddit.com/"'
+    ]
+
+    buildTypes {
+        debug {
+            buildConfigField 'String', 'BASE_URL', baseUrl.debug
+        }
+
+        release {
+            buildConfigField 'String', 'BASE_URL', baseUrl.release
+        }
+    }
+
+}
+
+final versions = rootProject.ext
+
+dependencies {
+
+    /**
+     * App dependencies
+     **/
+
+    // Support annotations
+    implementation "com.android.support:support-annotations:$versions.supportLibrary"
+
+    // Gson
+    implementation "com.google.code.gson:gson:$versions.gson"
+
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$versions.retrofit"
+    implementation("com.squareup.retrofit2:converter-gson:$versions.retrofit") {
+        exclude module: 'retrofit'
+        exclude module: 'gson'
+    }
+    implementation("com.squareup.retrofit2:adapter-rxjava2:$versions.retrofit") {
+        exclude module: 'retrofit'
+    }
+
+    // Rx
+    implementation "io.reactivex.rxjava2:rxjava:$versions.rxJava"
+
+    // OkHttp
+    implementation "com.squareup.okhttp3:okhttp:$versions.okHttp"
+    implementation("com.squareup.okhttp3:logging-interceptor:$versions.okHttp")
+
+    // Timber
+    implementation "com.jakewharton.timber:timber:$versions.timber"
+
+    // ThreeTen Android Backport (for date conversion)
+    implementation "com.jakewharton.threetenabp:threetenabp:$versions.threeten"
+
+    /**
+     * Test dependencies
+     **/
+
+    // Kotlin
+    testImplementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$versions.kotlin"
+
+    // Request Matcher
+    testImplementation "br.com.concretesolutions:requestmatcher:$versions.requestMatcher"
+
+    // MockWebServer
+    testImplementation "com.squareup.okhttp3:mockwebserver:$versions.okHttp"
+
+    // Hamcrest
+    testImplementation "org.hamcrest:hamcrest-all:$versions.hamcrest"
+
+    // Mockito
+    testImplementation "org.mockito:mockito-core:$versions.mockito"
+
+    // Mirror
+    testImplementation "net.vidageek:mirror:$versions.mirror"
+
+    // JUnit
+    testImplementation "junit:junit:$versions.jUnit"
+}
