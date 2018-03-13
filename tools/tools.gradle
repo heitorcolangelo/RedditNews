@@ -1,0 +1,2 @@
+apply from: "$rootDir/tools/jacoco.gradle"
+apply from: "$rootDir/tools/ktlint.gradle"
