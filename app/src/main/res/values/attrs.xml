@@ -12,4 +12,5 @@
     </declare-styleable>
 
     <attr name="itemNewsViewStyle" />
+    <attr name="itemProgressViewStyle" />
 </resources>

@@ -9,9 +9,9 @@ import android.widget.TextView
 import com.heitorcolangelo.redditnews.R
 import com.heitorcolangelo.redditnews.ui.adapter.BaseAdapter
 import com.heitorcolangelo.redditnews.ui.extension.loadFromUrl
-import com.heitorcolangelo.repository.model.NewsData
+import com.heitorcolangelo.repository.model.News
 
-class ItemNewsView : RelativeLayout, BaseAdapter.ViewBinder<NewsData> {
+class ItemNewsView : RelativeLayout, BaseAdapter.ViewBinder<News> {
 
     private val title: TextView
     private val domain: TextView
@@ -35,12 +35,10 @@ class ItemNewsView : RelativeLayout, BaseAdapter.ViewBinder<NewsData> {
         thumbnail = findViewById(R.id.imgNewsThumbnail)
     }
 
-    override fun bind(model: NewsData) {
-        with(model) {
-            title.text = data.title
-            domain.text = data.domain
-            comments.text = data.numComments
-            thumbnail.loadFromUrl(data.thumbnail, R.drawable.ic_thumbnail_placeholder)
-        }
+    override fun bind(model: News) {
+            title.text = model.data.title
+            domain.text = model.data.domain
+            comments.text = model.data.numComments
+            thumbnail.loadFromUrl(model.data.thumbnail, R.drawable.ic_thumbnail_placeholder)
     }
 }

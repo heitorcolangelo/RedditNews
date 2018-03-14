@@ -30,6 +30,7 @@
                 android:textStyle="bold"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
+                android:layout_marginTop="@dimen/small_margin"
                 android:maxLines="1"
                 tools:text="News title"/>
 
@@ -40,6 +41,7 @@
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:maxLines="1"
+                android:layout_marginTop="@dimen/small_margin"
                 tools:text="News domain"/>
 
         <TextView
@@ -50,6 +52,7 @@
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:text="@string/comments"
+                android:layout_marginTop="@dimen/small_margin"
                 android:drawablePadding="@dimen/small_padding"
                 android:drawableStart="@drawable/ic_comment"/>
 
