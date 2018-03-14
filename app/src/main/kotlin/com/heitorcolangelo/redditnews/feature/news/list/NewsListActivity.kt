@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import com.heitorcolangelo.redditnews.R
+import com.heitorcolangelo.redditnews.feature.news.details.NewsDetailsActivity
 import com.heitorcolangelo.redditnews.manager.NewsManager
 import com.heitorcolangelo.redditnews.ui.adapter.PaginationAdapter
 import com.heitorcolangelo.redditnews.ui.base.BaseActivity
@@ -88,7 +89,7 @@ class NewsListActivity : BaseActivity(), PaginationAdapter.OnLoadMoreListener {
     }
 
     private fun onItemClick(news: News) {
-//        startActivity(newsDetailsActivity.intent(this, news))
+        startActivity(NewsDetailsActivity.intent(this, news.data))
     }
 
     private fun restoreState(savedState: Bundle) {
@@ -97,7 +98,6 @@ class NewsListActivity : BaseActivity(), PaginationAdapter.OnLoadMoreListener {
     }
 
     override fun onLoadMore(page: String) {
-
     }
 
     companion object {

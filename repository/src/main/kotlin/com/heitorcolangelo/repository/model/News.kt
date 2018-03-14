@@ -6,4 +6,4 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class News(
     val data: NewsData
-): Parcelable
+) : Parcelable

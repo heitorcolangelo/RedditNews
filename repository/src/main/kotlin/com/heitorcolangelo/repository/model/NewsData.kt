@@ -12,4 +12,4 @@ data class NewsData(
     @SerializedName("num_comments")
     val numComments: String,
     val thumbnail: String
-): Parcelable
+) : Parcelable
