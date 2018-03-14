@@ -16,5 +16,4 @@ object NewsManager {
             }
             .observeOn(AndroidSchedulers.mainThread())
     }
-
 }
