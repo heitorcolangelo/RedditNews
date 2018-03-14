@@ -47,7 +47,7 @@ open class BaseAdapter<T : Parcelable>(private val viewCreator: (context: Contex
         return bundle
     }
 
-    fun itemClickListener(listener: ((T) -> Unit)): BaseAdapter<T> {
+    open fun itemClickListener(listener: ((T) -> Unit)): BaseAdapter<T> {
         this.itemClickListener = listener
         return this
     }
@@ -61,7 +61,7 @@ open class BaseAdapter<T : Parcelable>(private val viewCreator: (context: Contex
 
     fun isEmpty() = items.isEmpty()
 
-    fun clearList() {
+    open fun clearList() {
         items.clear()
         notifyDataSetChanged()
     }
@@ -75,7 +75,7 @@ open class BaseAdapter<T : Parcelable>(private val viewCreator: (context: Contex
     }
     // endregion
 
-    private fun getLayoutInflater(parent: ViewGroup): LayoutInflater {
+    protected fun getLayoutInflater(parent: ViewGroup): LayoutInflater {
         if (layoutInflater == null)
             layoutInflater = LayoutInflater.from(parent.context)
         return layoutInflater!!

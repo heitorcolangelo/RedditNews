@@ -10,4 +10,7 @@
         <attr name="subtitleTextAppearance" format="reference" />
         <attr name="iconColor" format="color" />
     </declare-styleable>
+
+    <attr name="itemNewsViewStyle" />
+    <attr name="itemProgressViewStyle" />
 </resources>

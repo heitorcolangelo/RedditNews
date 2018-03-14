@@ -1,6 +1,7 @@
 package com.heitorcolangelo.repository.data.remote
 
-import com.heitorcolangelo.repository.model.NewsResponseData
+import com.heitorcolangelo.repository.model.News
+import com.heitorcolangelo.repository.model.ResponseData
 import io.reactivex.Observable
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -12,7 +13,7 @@ import retrofit2.http.Query
 interface RedditService {
 
     @GET("r/android/new/.json")
-    fun getNews(@Query("after") after: String = ""): Observable<NewsResponseData>
+    fun getNews(@Query("after") after: String = ""): Observable<ResponseData<News>>
 
     companion object {
         internal fun build(url: String, gsonConverterFactory: GsonConverterFactory, rxJava2CallAdapterFactory: RxJava2CallAdapterFactory, okHttpClient: OkHttpClient): RedditService {

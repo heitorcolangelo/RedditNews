@@ -2,7 +2,7 @@ package com.heitorcolangelo.repository.model
 
 import com.google.gson.annotations.SerializedName
 
-data class NewsResponseData(
+data class ResponseData<out T>(
     @SerializedName("data")
-    val page: NewsPage
+    val page: Page<T>
 )

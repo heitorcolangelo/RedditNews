@@ -3,7 +3,6 @@ package com.heitorcolangelo.redditnews.ui.statemachine
 import android.view.View.GONE
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
-import com.heitorcolangelo.projectsapp.ui.statemachine.StateMachine
 
 /**
  * Implementation of [StateMachine]
