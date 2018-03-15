@@ -10,11 +10,12 @@ import com.heitorcolangelo.redditnews.ui.adapter.PaginationAdapter
 import com.heitorcolangelo.redditnews.ui.base.BaseActivity
 import com.heitorcolangelo.redditnews.ui.statemachine.ViewStateMachine
 import com.heitorcolangelo.redditnews.ui.view.ItemNewsView
+import com.heitorcolangelo.redditnews.ui.view.WarningView
 import com.heitorcolangelo.repository.model.News
 import com.heitorcolangelo.repository.model.Page
 import kotlinx.android.synthetic.main.activity_news_list.*
 
-class NewsListActivity : BaseActivity(), PaginationAdapter.OnLoadMoreListener {
+class NewsListActivity : BaseActivity() {
 
     private val stateMachine = ViewStateMachine()
     private val adapter = PaginationAdapter(::ItemNewsView, object : PaginationAdapter.OnLoadMoreListener {
@@ -26,10 +27,11 @@ class NewsListActivity : BaseActivity(), PaginationAdapter.OnLoadMoreListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news_list)
-
         setSupportActionBar(toolbar)
+
         setupStateMachine(savedInstanceState)
         setupRecyclerView()
+        setupErrorView(errorView)
 
         if (savedInstanceState == null)
             loadNewsPage()
@@ -97,7 +99,11 @@ class NewsListActivity : BaseActivity(), PaginationAdapter.OnLoadMoreListener {
         stateMachine.changeState(SUCCESS_STATE)
     }
 
-    override fun onLoadMore(page: String) {
+    private fun setupErrorView(view: WarningView) = with(view) {
+        this.setOnClickListener {
+            stateMachine.changeState(LOADING_STATE)
+            adapter.retry()
+        }
     }
 
     companion object {

@@ -103,6 +103,8 @@ class PaginationAdapter<T : Parcelable>(viewCreator: (context: Context) -> ViewB
         notifyItemChanged(itemCount)
     }
 
+    fun retry() = listener.onLoadMore(nextPage)
+
     private fun insertLoadingItem() {
         notifyItemInserted(itemCount)
         hasLoadingItem = true
