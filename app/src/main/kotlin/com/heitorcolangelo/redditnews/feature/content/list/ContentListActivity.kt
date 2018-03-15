@@ -1,32 +1,32 @@
-package com.heitorcolangelo.redditnews.feature.news.list
+package com.heitorcolangelo.redditnews.feature.content.list
 
 import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import com.heitorcolangelo.redditnews.R
-import com.heitorcolangelo.redditnews.feature.news.details.NewsDetailsActivity
+import com.heitorcolangelo.redditnews.feature.content.details.ContentDetailsActivity
 import com.heitorcolangelo.redditnews.manager.NewsManager
 import com.heitorcolangelo.redditnews.ui.adapter.PaginationAdapter
 import com.heitorcolangelo.redditnews.ui.base.BaseActivity
 import com.heitorcolangelo.redditnews.ui.statemachine.ViewStateMachine
-import com.heitorcolangelo.redditnews.ui.view.ItemNewsView
+import com.heitorcolangelo.redditnews.ui.view.ItemContentView
 import com.heitorcolangelo.redditnews.ui.view.WarningView
-import com.heitorcolangelo.repository.model.News
+import com.heitorcolangelo.repository.model.Content
 import com.heitorcolangelo.repository.model.Page
-import kotlinx.android.synthetic.main.activity_news_list.*
+import kotlinx.android.synthetic.main.activity_content_list.*
 
-class NewsListActivity : BaseActivity() {
+class ContentListActivity : BaseActivity() {
 
     private val stateMachine = ViewStateMachine()
-    private val adapter = PaginationAdapter(::ItemNewsView, object : PaginationAdapter.OnLoadMoreListener {
+    private val adapter = PaginationAdapter(::ItemContentView, object : PaginationAdapter.OnLoadMoreListener {
         override fun onLoadMore(page: String) {
-            this@NewsListActivity.loadNewsPage(page)
+            this@ContentListActivity.loadContentPage(page)
         }
     }).itemClickListener(::onItemClick)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_news_list)
+        setContentView(R.layout.activity_content_list)
         setSupportActionBar(toolbar)
 
         setupStateMachine(savedInstanceState)
@@ -34,7 +34,7 @@ class NewsListActivity : BaseActivity() {
         setupErrorView(errorView)
 
         if (savedInstanceState == null)
-            loadNewsPage()
+            loadContentPage()
         else
             restoreState(savedInstanceState)
     }
@@ -46,12 +46,12 @@ class NewsListActivity : BaseActivity() {
     }
 
     private fun setupRecyclerView() = with(recyclerView) {
-        layoutManager = LinearLayoutManager(this@NewsListActivity)
-        addItemDecoration(DividerItemDecoration(this@NewsListActivity, DividerItemDecoration.VERTICAL))
-        adapter = this@NewsListActivity.adapter
+        layoutManager = LinearLayoutManager(this@ContentListActivity)
+        addItemDecoration(DividerItemDecoration(this@ContentListActivity, DividerItemDecoration.VERTICAL))
+        adapter = this@ContentListActivity.adapter
     }
 
-    private fun loadNewsPage(page: String = "") {
+    private fun loadContentPage(page: String = "") {
         subscriptions.add(NewsManager.getNews(page)
             .subscribe(::onSuccess, ::onError)
         )
@@ -78,8 +78,8 @@ class NewsListActivity : BaseActivity() {
         }
     }
 
-    private fun onSuccess(newsPage: Page<News>) {
-        adapter.addPage(newsPage)
+    private fun onSuccess(contentPage: Page<Content>) {
+        adapter.addPage(contentPage)
         stateMachine.changeState(if (adapter.isEmpty()) EMPTY_STATE else SUCCESS_STATE)
     }
 
@@ -90,8 +90,8 @@ class NewsListActivity : BaseActivity() {
         super.onError(throwable)
     }
 
-    private fun onItemClick(news: News) {
-        startActivity(NewsDetailsActivity.intent(this, news.data))
+    private fun onItemClick(content: Content) {
+        startActivity(ContentDetailsActivity.intent(this, content.data))
     }
 
     private fun restoreState(savedState: Bundle) {

@@ -1,4 +1,4 @@
-package com.heitorcolangelo.redditnews.feature.news.details
+package com.heitorcolangelo.redditnews.feature.content.details
 
 import android.content.Context
 import android.content.Intent
@@ -8,24 +8,24 @@ import com.heitorcolangelo.redditnews.R
 import com.heitorcolangelo.redditnews.ui.base.BaseActivity
 import com.heitorcolangelo.redditnews.ui.extension.fromHtml
 import com.heitorcolangelo.redditnews.ui.extension.loadFromUrl
-import com.heitorcolangelo.repository.model.NewsData
-import kotlinx.android.synthetic.main.activity_news_details.*
-import kotlinx.android.synthetic.main.view_news_details_content.*
+import com.heitorcolangelo.repository.model.ContentData
+import kotlinx.android.synthetic.main.activity_content_details.*
+import kotlinx.android.synthetic.main.view_details_content.*
 
-class NewsDetailsActivity : BaseActivity() {
+class ContentDetailsActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_news_details)
+        setContentView(R.layout.activity_content_details)
         setupToolbar(toolbar)
         bindDataToLayout(getNewsData(intent))
     }
 
-    private fun bindDataToLayout(data: NewsData) = with(data) {
-        txtNewsTitle.text = title
-        txtNewsSelfText.text = selfText.fromHtml()
+    private fun bindDataToLayout(data: ContentData) = with(data) {
+        txtContentTitle.text = title
+        txtContentSelfText.text = selfText.fromHtml()
         imageUrl()?.let {
-            imgNewsBackdrop.loadFromUrl(it.fromHtml())
+            imgContentBackdrop.loadFromUrl(it.fromHtml())
         } ?: appBarLayout.setExpanded(false)
     }
 
@@ -40,11 +40,11 @@ class NewsDetailsActivity : BaseActivity() {
         private const val NEWS_KEY = "NEWS_KEY"
 
         private fun getNewsData(intent: Intent) =
-            intent.getParcelableExtra(NEWS_KEY) as NewsData
+            intent.getParcelableExtra(NEWS_KEY) as ContentData
 
-        fun intent(context: Context, newsData: NewsData): Intent {
-            val intent = Intent(context, NewsDetailsActivity::class.java)
-            intent.putExtra(NEWS_KEY, newsData)
+        fun intent(context: Context, contentData: ContentData): Intent {
+            val intent = Intent(context, ContentDetailsActivity::class.java)
+            intent.putExtra(NEWS_KEY, contentData)
             return intent
         }
     }

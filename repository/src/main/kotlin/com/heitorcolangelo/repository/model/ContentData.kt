@@ -6,7 +6,7 @@ import com.heitorcolangelo.repository.model.image.Preview
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class NewsData(
+data class ContentData(
     val id: String,
     val title: String,
     val domain: String,
