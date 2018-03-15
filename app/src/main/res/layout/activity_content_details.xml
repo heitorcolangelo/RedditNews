@@ -21,7 +21,7 @@
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView
-                    android:id="@+id/imgNewsBackdrop"
+                    android:id="@+id/imgContentBackdrop"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:adjustViewBounds="true"
@@ -48,8 +48,8 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <include
-                android:id="@+id/layout_news_details_content"
-                layout="@layout/view_news_details_content"/>
+                android:id="@+id/layoutDetailsContent"
+                layout="@layout/view_details_content"/>
 
     </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>

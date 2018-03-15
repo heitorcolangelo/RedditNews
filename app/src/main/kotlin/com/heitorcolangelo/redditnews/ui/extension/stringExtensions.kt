@@ -6,6 +6,7 @@ import android.text.Html
 /**
  * Convert html tag text into string text using android.text.Html
  */
+@Suppress("DEPRECATION")
 fun String.fromHtml(): String {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
         Html.fromHtml(this, Html.FROM_HTML_MODE_COMPACT).toString()

@@ -11,7 +11,7 @@
             android:theme="@style/AppTheme">
         <activity
                 android:label="@string/app_name"
-                android:name=".feature.news.list.NewsListActivity">
+                android:name=".feature.content.list.ContentListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -20,7 +20,7 @@
         </activity>
         <activity
                 android:label=""
-                android:name=".feature.news.details.NewsDetailsActivity"/>
+                android:name=".feature.content.details.ContentDetailsActivity"/>
     </application>
 
 </manifest>

@@ -11,6 +11,6 @@
         <attr name="iconColor" format="color" />
     </declare-styleable>
 
-    <attr name="itemNewsViewStyle" />
+    <attr name="itemContentViewStyle" />
     <attr name="itemProgressViewStyle" />
 </resources>

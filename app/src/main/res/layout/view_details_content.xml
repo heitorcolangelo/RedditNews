@@ -6,7 +6,7 @@
         android:layout_width="match_parent" android:layout_height="match_parent">
 
     <TextView
-            android:id="@+id/txtNewsTitle"
+            android:id="@+id/txtContentTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
@@ -15,13 +15,30 @@
             tools:text="This is a title for a reddit post, and it should be bold and big"/>
 
     <TextView
-            android:id="@+id/txtNewsSelfText"
+            android:id="@+id/txtContentSelfText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_margin"
             style="@style/AppStyle.TextAppearance"
             android:textColor="@color/old_lavender"
-            app:layout_constraintTop_toBottomOf="@+id/txtNewsTitle"
+            app:layout_constraintTop_toBottomOf="@+id/txtContentTitle"
             tools:text="This is a selftext, should look like a description, and may contai a lot of text, or just a few words."/>
 
+    <TextView
+            android:id="@+id/txtCommentsLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin"
+            style="@style/AppStyle.TextAppearance.Medium"
+            android:textStyle="bold"
+            android:textColor="@color/old_lavender"
+            android:text="@string/comments"
+            app:layout_constraintTop_toBottomOf="@+id/txtContentSelfText"/>
+
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_margin"
+            app:layout_constraintTop_toBottomOf="@+id/txtCommentsLabel"/>
 </android.support.constraint.ConstraintLayout>

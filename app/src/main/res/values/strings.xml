@@ -9,6 +9,6 @@
     <string name="empty_subtitle">Nothing new for you</string>
     <string name="comments">comments</string>
 
-    <!-- News Details -->
+    <!-- Content Details -->
     <string name="cd_backdrop">Backdrop image</string>
 </resources>

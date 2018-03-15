@@ -9,9 +9,9 @@ import android.widget.TextView
 import com.heitorcolangelo.redditnews.R
 import com.heitorcolangelo.redditnews.ui.adapter.BaseAdapter
 import com.heitorcolangelo.redditnews.ui.extension.loadFromUrl
-import com.heitorcolangelo.repository.model.News
+import com.heitorcolangelo.repository.model.Content
 
-class ItemNewsView : RelativeLayout, BaseAdapter.ViewBinder<News> {
+class ItemContentView : RelativeLayout, BaseAdapter.ViewBinder<Content> {
 
     private val title: TextView
     private val domain: TextView
@@ -20,14 +20,14 @@ class ItemNewsView : RelativeLayout, BaseAdapter.ViewBinder<News> {
 
     constructor(context: Context) : this(context, null)
 
-    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, R.attr.itemNewsViewStyle)
+    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, R.attr.itemContentViewStyle)
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : this(context, attrs, defStyleAttr, 0)
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
 
     init {
-        val root = View.inflate(context, R.layout.view_item_news, this)
+        val root = View.inflate(context, R.layout.view_item_content, this)
         root.setPadding(0, 10, 0, 10)
         title = findViewById(R.id.txtNewsTitle)
         domain = findViewById(R.id.txtNewsDomain)
@@ -35,7 +35,7 @@ class ItemNewsView : RelativeLayout, BaseAdapter.ViewBinder<News> {
         thumbnail = findViewById(R.id.imgNewsThumbnail)
     }
 
-    override fun bind(model: News) {
+    override fun bind(model: Content) {
             title.text = model.data.title
             domain.text = model.data.domain
             comments.text = model.data.numComments
