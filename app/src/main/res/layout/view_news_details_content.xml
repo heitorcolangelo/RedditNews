@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:padding="@dimen/default_padding"
+        android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+            android:id="@+id/txtNewsTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/AppStyle.TextAppearance.Header"
+            android:textStyle="bold"
+            tools:text="This is a title for a reddit post, and it should be bold and big"/>
+
+    <TextView
+            android:id="@+id/txtNewsSelfText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin"
+            style="@style/AppStyle.TextAppearance"
+            android:textColor="@color/old_lavender"
+            app:layout_constraintTop_toBottomOf="@+id/txtNewsTitle"
+            tools:text="This is a selftext, should look like a description, and may contai a lot of text, or just a few words."/>
+
+</android.support.constraint.ConstraintLayout>

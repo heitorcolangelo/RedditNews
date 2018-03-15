@@ -66,4 +66,16 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <!-- Collapsing Toolbar -->
+    <style name="AppStyle.CollapsingToolbar" >
+        <item name="collapsedTitleTextAppearance">@style/AppStyle.Toolbar.Title</item>
+        <item name="contentScrim">?attr/colorPrimary</item>
+        <item name="expandedTitleGravity">top</item>
+        <item name="expandedTitleMarginStart">@dimen/small_margin</item>
+        <item name="expandedTitleMarginTop">120dp</item>
+        <item name="expandedTitleMarginBottom">@dimen/default_margin</item>
+        <item name="expandedTitleTextAppearance">@style/AppStyle.Toolbar.Title</item>
+        <item name="scrimVisibleHeightTrigger">100dp</item>
+    </style>
+
 </resources>

@@ -8,4 +8,7 @@
     <string name="empty_title">@string/sorry</string>
     <string name="empty_subtitle">Nothing new for you</string>
     <string name="comments">comments</string>
+
+    <!-- News Details -->
+    <string name="cd_backdrop">Backdrop image</string>
 </resources>
