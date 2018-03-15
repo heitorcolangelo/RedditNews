@@ -25,8 +25,7 @@ class NewsDetailsActivity : BaseActivity() {
         txtNewsTitle.text = title
         txtNewsSelfText.text = selfText.fromHtml()
         imageUrl()?.let {
-            val url = it.fromHtml()
-            imgNewsBackdrop.loadFromUrl(url)
+            imgNewsBackdrop.loadFromUrl(it.fromHtml())
         } ?: appBarLayout.setExpanded(false)
     }
 
