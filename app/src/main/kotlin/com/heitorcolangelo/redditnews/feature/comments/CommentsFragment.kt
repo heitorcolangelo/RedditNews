@@ -52,7 +52,6 @@ class CommentsFragment : BaseFragment() {
                 .getComments(subreddit(this), contentId(this), numOfComments(this))
                 .subscribe(::onSuccess, ::onError))
         }
-
     }
 
     private fun onSuccess(commentPage: Page<Comment>) {

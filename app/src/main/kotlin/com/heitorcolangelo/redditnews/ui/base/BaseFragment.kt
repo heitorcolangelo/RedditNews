@@ -3,7 +3,7 @@ package com.heitorcolangelo.redditnews.ui.base
 import android.support.v4.app.Fragment
 import io.reactivex.disposables.CompositeDisposable
 
-abstract class BaseFragment: Fragment() {
+abstract class BaseFragment : Fragment() {
 
     protected val subscriptions = CompositeDisposable()
 

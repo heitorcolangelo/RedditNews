@@ -9,7 +9,7 @@ import com.heitorcolangelo.redditnews.R
 import com.heitorcolangelo.redditnews.ui.adapter.BaseAdapter
 import com.heitorcolangelo.repository.model.Comment
 
-class ItemCommentView: LinearLayout, BaseAdapter.ViewBinder<Comment> {
+class ItemCommentView : LinearLayout, BaseAdapter.ViewBinder<Comment> {
 
     private val commentAuthor: TextView
     private val commentBody: TextView
@@ -21,7 +21,6 @@ class ItemCommentView: LinearLayout, BaseAdapter.ViewBinder<Comment> {
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : this(context, attrs, defStyleAttr, 0)
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
-
 
     init {
         View.inflate(context, R.layout.view_item_comment, this)

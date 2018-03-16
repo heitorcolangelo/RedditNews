@@ -6,4 +6,4 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Comment(
     val data: CommentData
-): Parcelable
+) : Parcelable
