@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.view_item_progress.view.*
 class PaginationAdapter<T : Parcelable>(viewCreator: (context: Context) -> ViewBinder<T>, private val listener: OnLoadMoreListener) : BaseAdapter<T>(viewCreator) {
     private var hasLoadingItem: Boolean = false
     private var hasError: Boolean = false
-    private var nextPage = ""
+    private var nextPage: String? = ""
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return if (viewType != VIEW_PROGRESS)
@@ -32,7 +32,11 @@ class PaginationAdapter<T : Parcelable>(viewCreator: (context: Context) -> ViewB
             binder.rootView.tag = PROGRESS_TAG
             binder.progressBar.visibility = if (hasError) GONE else VISIBLE
             binder.txtTryAgain.visibility = if (hasError) VISIBLE else GONE
-            binder.txtTryAgain.setOnClickListener({ listener.onLoadMore(nextPage) })
+            binder.txtTryAgain.setOnClickListener({
+                nextPage?.let {
+                    listener.onLoadMore(it)
+                }
+            })
         }
     }
 
@@ -63,8 +67,9 @@ class PaginationAdapter<T : Parcelable>(viewCreator: (context: Context) -> ViewB
             override fun onChildViewAttachedToWindow(view: View) {
                 if (view.tag != null
                     && view.tag == PROGRESS_TAG
-                    && !hasError)
-                    listener.onLoadMore(nextPage)
+                    && !hasError
+                    && nextPage != null)
+                    listener.onLoadMore(nextPage!!)
             }
 
             override fun onChildViewDetachedFromWindow(view: View) {}
@@ -93,7 +98,7 @@ class PaginationAdapter<T : Parcelable>(viewCreator: (context: Context) -> ViewB
         addNewItems(page.results)
         nextPage = page.after
 
-        if (!nextPage.isEmpty())
+        if (nextPage != null && !nextPage!!.isEmpty())
             insertLoadingItem()
     }
 
@@ -103,7 +108,9 @@ class PaginationAdapter<T : Parcelable>(viewCreator: (context: Context) -> ViewB
         notifyItemChanged(itemCount)
     }
 
-    fun retry() = listener.onLoadMore(nextPage)
+    fun retry() = nextPage?.let {
+        listener.onLoadMore(it)
+    }
 
     private fun insertLoadingItem() {
         notifyItemInserted(itemCount)

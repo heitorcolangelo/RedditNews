@@ -21,7 +21,10 @@ interface RedditService {
         @Query("after") after: String = ""): Observable<ResponseData<Content>>
 
     @GET("r/{subreddit}/comments/{id}/.json")
-    fun getComments(@Path("subreddit") subreddit: String, @Path("id") id: String): Observable<ResponseData<Comment>>
+    fun getComments(
+        @Path("subreddit") subreddit: String,
+        @Path("id") id: String,
+        @Query("limit") limit: Int): Observable<List<ResponseData<Comment>>>
 
     companion object {
         internal fun build(url: String, gsonConverterFactory: GsonConverterFactory, rxJava2CallAdapterFactory: RxJava2CallAdapterFactory, okHttpClient: OkHttpClient): RedditService {
