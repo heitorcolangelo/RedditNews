@@ -9,7 +9,7 @@ android {
     defaultConfig {
         applicationId "com.heitorcolangelo.redditnews"
         proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        testInstrumentationRunner 'com.github.tmurakami.dexopener.DexOpenerAndroidJUnitRunner'
+        testInstrumentationRunner "com.heitorcolangelo.redditnews.CustomTestRunner"
     }
 
     buildTypes {
@@ -88,5 +88,8 @@ dependencies {
 
     // Gson
     androidTestImplementation "com.google.code.gson:gson:$versions.gson"
+
+    // TestButler
+    androidTestImplementation "com.linkedin.testbutler:test-butler-library:$versions.testButler"
 
 }
