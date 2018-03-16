@@ -11,6 +11,5 @@
     <string name="comments">comments</string>
     <string name="comments_empty_subtitle">No comments here yet!</string>
     <string name="cd_backdrop">Backdrop image</string>
-    <string name="show_replies">Show replies for this comment</string>
     <string name="show_more_comments">Show more comments</string>
 </resources>
