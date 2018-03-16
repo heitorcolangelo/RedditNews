@@ -15,6 +15,8 @@ data class ContentData(
     @SerializedName("selftext")
     val selfText: String,
     val thumbnail: String,
+    val subreddit: String,
+    val permalink: String,
     private val preview: Preview?
 ) : Parcelable {
     fun imageUrl() = preview?.images?.first()?.source?.url

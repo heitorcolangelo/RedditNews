@@ -13,4 +13,5 @@
 
     <attr name="itemContentViewStyle" />
     <attr name="itemProgressViewStyle" />
+    <attr name="itemCommentViewStyle" />
 </resources>

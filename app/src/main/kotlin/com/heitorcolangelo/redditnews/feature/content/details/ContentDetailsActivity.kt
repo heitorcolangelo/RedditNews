@@ -5,7 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.Toolbar
 import com.heitorcolangelo.redditnews.R
+import com.heitorcolangelo.redditnews.feature.comments.CommentsFragment
 import com.heitorcolangelo.redditnews.ui.base.BaseActivity
+import com.heitorcolangelo.redditnews.ui.extension.attachNewFragment
 import com.heitorcolangelo.redditnews.ui.extension.fromHtml
 import com.heitorcolangelo.redditnews.ui.extension.loadFromUrl
 import com.heitorcolangelo.repository.model.ContentData
@@ -18,7 +20,10 @@ class ContentDetailsActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_content_details)
         setupToolbar(toolbar)
-        bindDataToLayout(getNewsData(intent))
+        with(getContentData(intent)) {
+            bindDataToLayout(this)
+            setupComments(subreddit, id, numComments.toInt(), permalink)
+        }
     }
 
     private fun bindDataToLayout(data: ContentData) = with(data) {
@@ -27,6 +32,14 @@ class ContentDetailsActivity : BaseActivity() {
         imageUrl()?.let {
             imgContentBackdrop.loadFromUrl(it.fromHtml())
         } ?: appBarLayout.setExpanded(false)
+    }
+
+    private fun setupComments(subreddit: String, contentId: String, numOfComments: Int, permalink: String) {
+        val fragment = CommentsFragment.newInstance(subreddit, contentId, numOfComments, permalink)
+
+        supportFragmentManager.beginTransaction().apply {
+            attachNewFragment(this@ContentDetailsActivity, R.id.comments_fragment_container, fragment, CommentsFragment.TAG)
+        }.commit()
     }
 
     private fun setupToolbar(toolbar: Toolbar) = with(toolbar) {
@@ -39,7 +52,7 @@ class ContentDetailsActivity : BaseActivity() {
     companion object {
         private const val NEWS_KEY = "NEWS_KEY"
 
-        private fun getNewsData(intent: Intent) =
+        private fun getContentData(intent: Intent) =
             intent.getParcelableExtra(NEWS_KEY) as ContentData
 
         fun intent(context: Context, contentData: ContentData): Intent {

@@ -31,8 +31,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
-            app:subtitle="@string/empty_subtitle"
-            app:title="@string/empty_title"/>
+            app:subtitle="@string/default_empty_subtitle"
+            app:title="@string/default_empty_title"/>
 
     <com.heitorcolangelo.redditnews.ui.view.WarningView
             android:id="@+id/errorView"
@@ -44,8 +44,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
-            app:subtitle="@string/error_subtitle"
-            app:title="@string/error_title"/>
+            app:subtitle="@string/default_error_subtitle"
+            app:title="@string/default_error_title"/>
 
     <ProgressBar
             android:id="@+id/loadingView"
