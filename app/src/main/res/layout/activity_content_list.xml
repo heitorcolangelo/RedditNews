@@ -12,14 +12,20 @@
             android:layout_height="wrap_content"
             tools:title="Toolbar title"/>
 
-    <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
+    <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipeContainer"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <com.heitorcolangelo.redditnews.ui.view.WarningView
             android:id="@+id/emptyView"
@@ -57,3 +63,4 @@
             app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
 
 </android.support.constraint.ConstraintLayout>
+

@@ -2,14 +2,14 @@ package com.heitorcolangelo.redditnews.feature.content.list
 
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import com.heitorcolangelo.redditnews.R
 import com.heitorcolangelo.redditnews.feature.content.details.ContentDetailsActivity
-import com.heitorcolangelo.redditnews.ui.adapter.PaginationAdapter
 import com.heitorcolangelo.redditnews.ui.base.BaseActivity
 import com.heitorcolangelo.redditnews.ui.statemachine.ViewStateMachine
-import com.heitorcolangelo.redditnews.ui.view.ItemContentView
 import com.heitorcolangelo.redditnews.ui.view.WarningView
 import com.heitorcolangelo.repository.model.Content
 import com.heitorcolangelo.repository.model.Page
@@ -18,34 +18,60 @@ import kotlinx.android.synthetic.main.activity_content_list.*
 class ContentListActivity : BaseActivity() {
 
     private val stateMachine = ViewStateMachine()
-    private val adapter = PaginationAdapter(::ItemContentView, object : PaginationAdapter.OnLoadMoreListener {
-        override fun onLoadMore(page: String) {
-            this@ContentListActivity.loadContentPage(page)
-        }
-    }).itemClickListener(::onItemClick)
+
+    private val model by lazy { ViewModelProviders.of(this).get(ContentListViewModel::class.java) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_content_list)
         setSupportActionBar(toolbar)
 
-        setupStateMachine(savedInstanceState)
-        setupRecyclerView()
+        model.onLoadMore(this::loadContentPage)
+        model.adapter.itemClickListener(this::onItemClick)
+
+        setupStateMachine(savedInstanceState?.getBundle(STATE_MACHINE))
+        setupRecyclerView(recyclerView)
         setupErrorView(errorView)
-        loadContentPage()
+        setupSwipeContainer(swipeContainer)
     }
 
-    private fun setupRecyclerView() = with(recyclerView) {
-        layoutManager = LinearLayoutManager(this@ContentListActivity)
-        addItemDecoration(DividerItemDecoration(this@ContentListActivity, DividerItemDecoration.VERTICAL))
-        adapter = this@ContentListActivity.adapter
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBundle(STATE_MACHINE, stateMachine.saveInstanceState())
     }
 
     private fun loadContentPage(page: String = "") {
-        val model = ViewModelProviders.of(this).get(ContentListViewModel::class.java)
-        subscriptions.add(
-            model.getNews(DEFAULT_SUBREDDIT, page)
-                .subscribe(::onSuccess, ::onError))
+        subscriptions.add(model.getNews(DEFAULT_SUBREDDIT, page).subscribe(this::onSuccess, this::onError))
+    }
+
+    private fun onSuccess(pages: Page<Content>) {
+        model.adapter.addPage(pages)
+        stateMachine.changeState(if (model.adapter.isEmpty()) EMPTY_STATE else SUCCESS_STATE)
+        swipeContainer.isRefreshing = false
+    }
+
+    override fun onError(throwable: Throwable) {
+        swipeContainer.isRefreshing = false
+        if (model.adapter.isEmpty())
+            stateMachine.changeState(ERROR_STATE)
+        else model.adapter.failPage()
+        super.onError(throwable)
+    }
+
+    private fun onItemClick(content: Content) {
+        startActivity(ContentDetailsActivity.intent(this, content.data))
+    }
+
+    private fun setupSwipeContainer(swipeContainer: SwipeRefreshLayout) {
+        swipeContainer.setOnRefreshListener {
+            stateMachine.changeState(LOADING_STATE)
+        }
+    }
+
+    private fun setupRecyclerView(recyclerView: RecyclerView) = with(recyclerView) {
+        layoutManager = LinearLayoutManager(context)
+        addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        adapter = model.adapter
     }
 
     private fun setupStateMachine(savedState: Bundle?) {
@@ -57,6 +83,10 @@ class ContentListActivity : BaseActivity() {
             add(LOADING_STATE) {
                 visibles(loadingView)
                 gones(recyclerView, emptyView, errorView)
+                onEnter {
+                    model.adapter.clearList()
+                    loadContentPage()
+                }
             }
             add(EMPTY_STATE) {
                 visibles(emptyView)
@@ -69,26 +99,9 @@ class ContentListActivity : BaseActivity() {
         }
     }
 
-    private fun onSuccess(pages: List<Page<Content>>) {
-        adapter.addPages(pages)
-        stateMachine.changeState(if (adapter.isEmpty()) EMPTY_STATE else SUCCESS_STATE)
-    }
-
-    override fun onError(throwable: Throwable) {
-        if (adapter.isEmpty())
-            stateMachine.changeState(ERROR_STATE)
-        else adapter.failPage()
-        super.onError(throwable)
-    }
-
-    private fun onItemClick(content: Content) {
-        startActivity(ContentDetailsActivity.intent(this, content.data))
-    }
-
-    private fun setupErrorView(view: WarningView) = with(view) {
-        this.setOnClickListener {
+    private fun setupErrorView(view: WarningView) {
+        view.setOnClickListener {
             stateMachine.changeState(LOADING_STATE)
-            adapter.retry()
         }
     }
 

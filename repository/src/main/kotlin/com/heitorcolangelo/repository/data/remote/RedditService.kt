@@ -3,7 +3,6 @@ package com.heitorcolangelo.repository.data.remote
 import com.heitorcolangelo.repository.model.Comment
 import com.heitorcolangelo.repository.model.Content
 import com.heitorcolangelo.repository.model.ResponseData
-import io.reactivex.Flowable
 import io.reactivex.Observable
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -19,7 +18,7 @@ interface RedditService {
     fun getContent(
         @Path("subreddit") subreddit: String,
         @Path("content") content: String,
-        @Query("after") after: String = ""): Flowable<ResponseData<Content>>
+        @Query("after") after: String = ""): Observable<ResponseData<Content>>
 
     @GET("r/{subreddit}/comments/{id}/.json")
     fun getComments(
