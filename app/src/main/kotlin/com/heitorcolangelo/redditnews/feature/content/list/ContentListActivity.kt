@@ -1,11 +1,11 @@
 package com.heitorcolangelo.redditnews.feature.content.list
 
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import com.heitorcolangelo.redditnews.R
 import com.heitorcolangelo.redditnews.feature.content.details.ContentDetailsActivity
-import com.heitorcolangelo.redditnews.manager.ContentManager
 import com.heitorcolangelo.redditnews.ui.adapter.PaginationAdapter
 import com.heitorcolangelo.redditnews.ui.base.BaseActivity
 import com.heitorcolangelo.redditnews.ui.statemachine.ViewStateMachine
@@ -32,17 +32,7 @@ class ContentListActivity : BaseActivity() {
         setupStateMachine(savedInstanceState)
         setupRecyclerView()
         setupErrorView(errorView)
-
-        if (savedInstanceState == null)
-            loadContentPage()
-        else
-            restoreState(savedInstanceState)
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        outState.putBundle(ADAPTER_STATE, adapter.saveInstanceState())
-        outState.putBundle(STATE_MACHINE, stateMachine.saveInstanceState())
-        super.onSaveInstanceState(outState)
+        loadContentPage()
     }
 
     private fun setupRecyclerView() = with(recyclerView) {
@@ -52,9 +42,10 @@ class ContentListActivity : BaseActivity() {
     }
 
     private fun loadContentPage(page: String = "") {
-        subscriptions.add(ContentManager
-            .getNews(DEFAULT_SUBREDDIT, page)
-            .subscribe(::onSuccess, ::onError))
+        val model = ViewModelProviders.of(this).get(ContentListViewModel::class.java)
+        subscriptions.add(
+            model.getNews(DEFAULT_SUBREDDIT, page)
+                .subscribe(::onSuccess, ::onError))
     }
 
     private fun setupStateMachine(savedState: Bundle?) {
@@ -78,8 +69,8 @@ class ContentListActivity : BaseActivity() {
         }
     }
 
-    private fun onSuccess(contentPage: Page<Content>) {
-        adapter.addPage(contentPage)
+    private fun onSuccess(pages: List<Page<Content>>) {
+        adapter.addPages(pages)
         stateMachine.changeState(if (adapter.isEmpty()) EMPTY_STATE else SUCCESS_STATE)
     }
 
@@ -94,11 +85,6 @@ class ContentListActivity : BaseActivity() {
         startActivity(ContentDetailsActivity.intent(this, content.data))
     }
 
-    private fun restoreState(savedState: Bundle) {
-        adapter.restoreInstanceState(savedState.getBundle(ADAPTER_STATE))
-        stateMachine.changeState(SUCCESS_STATE)
-    }
-
     private fun setupErrorView(view: WarningView) = with(view) {
         this.setOnClickListener {
             stateMachine.changeState(LOADING_STATE)
@@ -107,8 +93,6 @@ class ContentListActivity : BaseActivity() {
     }
 
     companion object {
-        private const val ADAPTER_STATE = "ADAPTER_STATE"
-
         /**
          * I've set "android" as default value to attend the test specification.
          * But this can be easily changed as the app evolve

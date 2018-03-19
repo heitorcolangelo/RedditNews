@@ -102,6 +102,12 @@ class PaginationAdapter<T : Parcelable>(viewCreator: (context: Context) -> ViewB
             insertLoadingItem()
     }
 
+    fun addPages(pages: List<Page<T>>) {
+        pages.forEach {
+            addPage(it)
+        }
+    }
+
     fun failPage() {
         if (!hasLoadingItem) return
         hasError = true

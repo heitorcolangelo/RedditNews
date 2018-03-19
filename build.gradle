@@ -88,6 +88,7 @@ ext {
     rxJava = '2.1.0'
     picasso = '2.5.2'
     threeten = '1.0.5'
+    arch = '1.1.0'
 
     requestMatcher = '2.2.0'
     hamcrest = '1.3'
