@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.Toolbar
+import android.view.View.VISIBLE
 import com.heitorcolangelo.redditnews.R
 import com.heitorcolangelo.redditnews.feature.comments.CommentsFragment
 import com.heitorcolangelo.redditnews.ui.base.BaseActivity
@@ -28,7 +29,10 @@ class ContentDetailsActivity : BaseActivity() {
 
     private fun bindDataToLayout(data: ContentData) = with(data) {
         txtContentTitle.text = title
-        txtContentSelfText.text = selfText.fromHtml()
+        if (!selfText.isEmpty()) {
+            txtContentSelfText.visibility = VISIBLE
+            txtContentSelfText.text = selfText.fromHtml()
+        }
         imageUrl()?.let {
             imgContentBackdrop.loadFromUrl(it.fromHtml())
         } ?: appBarLayout.setExpanded(false)
