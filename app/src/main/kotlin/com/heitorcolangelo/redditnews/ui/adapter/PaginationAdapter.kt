@@ -12,7 +12,7 @@ import com.heitorcolangelo.redditnews.ui.view.ItemProgressView
 import com.heitorcolangelo.repository.model.Page
 import kotlinx.android.synthetic.main.view_item_progress.view.*
 
-class PaginationAdapter<T : Parcelable>(viewCreator: (context: Context) -> ViewBinder<T>, private val listener: OnLoadMoreListener) : BaseAdapter<T>(viewCreator) {
+class PaginationAdapter<T : Parcelable>(viewCreator: (context: Context) -> ViewBinder<T>, var listener: OnLoadMoreListener? = null) : BaseAdapter<T>(viewCreator) {
     private var hasLoadingItem: Boolean = false
     private var hasError: Boolean = false
     private var nextPage: String? = ""
@@ -34,7 +34,7 @@ class PaginationAdapter<T : Parcelable>(viewCreator: (context: Context) -> ViewB
             binder.txtTryAgain.visibility = if (hasError) VISIBLE else GONE
             binder.txtTryAgain.setOnClickListener({
                 nextPage?.let {
-                    listener.onLoadMore(it)
+                    listener?.onLoadMore(it)
                 }
             })
         }
@@ -69,7 +69,7 @@ class PaginationAdapter<T : Parcelable>(viewCreator: (context: Context) -> ViewB
                     && view.tag == PROGRESS_TAG
                     && !hasError
                     && nextPage != null)
-                    listener.onLoadMore(nextPage!!)
+                    listener?.onLoadMore(nextPage!!)
             }
 
             override fun onChildViewDetachedFromWindow(view: View) {}
@@ -106,10 +106,6 @@ class PaginationAdapter<T : Parcelable>(viewCreator: (context: Context) -> ViewB
         if (!hasLoadingItem) return
         hasError = true
         notifyItemChanged(itemCount)
-    }
-
-    fun retry() = nextPage?.let {
-        listener.onLoadMore(it)
     }
 
     private fun insertLoadingItem() {

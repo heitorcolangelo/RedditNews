@@ -2,18 +2,23 @@ package com.heitorcolangelo.redditnews.manager
 
 import com.heitorcolangelo.repository.RepositoryProvider
 import com.heitorcolangelo.repository.model.Comment
-import com.heitorcolangelo.repository.model.Page
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 
 class CommentManager private constructor() {
     companion object {
-        fun getComments(subreddit: String, contentId: String, limit: Int): Observable<Page<Comment>> {
+        fun getComments(subreddit: String, contentId: String, limit: Int): Observable<List<Comment>> {
             return RepositoryProvider.get()
                 .getComments(subreddit, contentId, limit)
                 .map {
-                    it[1].page
+                    it[COMMENTS_PAGE].page.results
                 }.observeOn(AndroidSchedulers.mainThread())
         }
+
+        /**
+         * I've set this constant because the API returns a List of ResponseData, it's a little bit weird
+         * but I've made this for simplicity purpose. A better solution should be studied with more time.
+         */
+        private const val COMMENTS_PAGE = 1
     }
 }
