@@ -8,7 +8,7 @@ import com.heitorcolangelo.repository.model.Comment
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers.mainThread
 
-class CommentsViewModel: ViewModel() {
+class CommentsViewModel : ViewModel() {
     val adapter = BaseAdapter(::ItemCommentView)
 
     fun getComments(subreddit: String, contentId: String, limit: Int): Observable<List<Comment>> {
