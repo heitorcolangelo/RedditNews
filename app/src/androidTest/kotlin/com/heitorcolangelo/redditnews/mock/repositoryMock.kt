@@ -1,5 +1,6 @@
 package com.heitorcolangelo.redditnews.mock
 
+import com.heitorcolangelo.redditnews.manager.CommentManager
 import com.heitorcolangelo.redditnews.manager.ContentManager
 import com.heitorcolangelo.repository.data.remote.RedditService
 import com.heitorcolangelo.repository.model.Comment
@@ -22,5 +23,5 @@ fun mockCommentsResponse(subreddit: String, id: String, limit: Int, response: Li
     Mockito
         .`when`(serviceMock.getComments(subreddit, id, limit))
         .thenReturn(Observable.just(response))
-    Mirror().on(ContentManager).set().field("repository").withValue(serviceMock)
+    Mirror().on(CommentManager).set().field("repository").withValue(serviceMock)
 }

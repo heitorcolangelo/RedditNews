@@ -54,14 +54,14 @@ class ContentDetailsActivity : BaseActivity() {
     }
 
     companion object {
-        private const val NEWS_KEY = "NEWS_KEY"
+        private const val CONTENT_KEY = "CONTENT_KEY"
 
         private fun getContentData(intent: Intent) =
-            intent.getParcelableExtra(NEWS_KEY) as ContentData
+            intent.getParcelableExtra(CONTENT_KEY) as ContentData
 
         fun intent(context: Context, contentData: ContentData): Intent {
             val intent = Intent(context, ContentDetailsActivity::class.java)
-            intent.putExtra(NEWS_KEY, contentData)
+            intent.putExtra(CONTENT_KEY, contentData)
             return intent
         }
     }

@@ -1,6 +1,5 @@
 <resources>
     <!-- Common -->
-    <string name="app_name">Reddit News</string>
     <string name="try_again">Try again!</string>
     <string name="default_error_title">Oops!</string>
     <string name="default_error_subtitle">There was an error retrieving that information</string>
