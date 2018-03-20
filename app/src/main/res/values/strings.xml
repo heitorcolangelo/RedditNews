@@ -1,3 +1,14 @@
 <resources>
-    <string name="app_name">RedditNews</string>
+    <!-- Common -->
+    <string name="try_again">Try again!</string>
+    <string name="default_error_title">Oops!</string>
+    <string name="default_error_subtitle">There was an error retrieving that information</string>
+    <string name="default_empty_title">Sorry!</string>
+    <string name="default_empty_subtitle">Nothing new for you</string>
+
+    <!-- Content Details -->
+    <string name="comments">comments</string>
+    <string name="comments_empty_subtitle">No comments here yet!</string>
+    <string name="cd_backdrop">Backdrop image</string>
+    <string name="show_more_comments">Show more comments</string>
 </resources>

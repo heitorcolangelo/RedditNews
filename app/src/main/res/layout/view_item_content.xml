@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:tools="http://schemas.android.com/tools"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       tools:parentTag="android.widget.RelativeLayout">
+
+    <ImageView
+            android:id="@+id/imgNewsThumbnail"
+            android:layout_width="64dp"
+            android:layout_height="96dp"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:layout_marginStart="@dimen/small_margin"
+            android:contentDescription="@null"
+            tools:src="@drawable/ic_error"/>
+
+    <LinearLayout
+            android:id="@+id/newsContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_toEndOf="@+id/imgNewsThumbnail"
+            android:layout_centerVertical="true">
+
+        <TextView
+                android:id="@+id/txtNewsTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:layout_marginTop="@dimen/small_margin"
+                android:maxLines="1"
+                tools:text="News title"/>
+
+        <TextView
+                android:id="@+id/txtNewsDomain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:layout_marginTop="@dimen/small_margin"
+                tools:text="News domain"/>
+
+        <TextView
+                android:id="@+id/txtNumComments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text="@string/comments"
+                android:layout_marginTop="@dimen/small_margin"
+                android:drawablePadding="@dimen/small_padding"
+                android:drawableStart="@drawable/ic_comment"/>
+
+    </LinearLayout>
+
+
+</merge>
