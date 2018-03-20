@@ -17,4 +17,15 @@ class ContentDetailsTest : BaseActivityTest<ContentDetailsActivity>(ContentDetai
             selfTextIsVisible()
         }
     }
+
+    @Test
+    fun whenSelfText_isEmpty_selfTextView_shouldNot_beVisible() {
+        contentDetails {
+            withoutSelfText()
+        } openContent {
+            selfTextIsNotVisible()
+        }
+    }
+
+
 }

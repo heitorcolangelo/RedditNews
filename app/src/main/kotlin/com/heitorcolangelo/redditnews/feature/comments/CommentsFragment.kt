@@ -2,8 +2,6 @@ package com.heitorcolangelo.redditnews.feature.comments
 
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.customtabs.CustomTabsIntent
-import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -20,6 +18,7 @@ import com.heitorcolangelo.redditnews.ui.base.BaseActivity.Companion.STATE_MACHI
 import com.heitorcolangelo.redditnews.ui.base.BaseActivity.Companion.SUCCESS_STATE
 import com.heitorcolangelo.redditnews.ui.base.BaseFragment
 import com.heitorcolangelo.redditnews.ui.statemachine.ViewStateMachine
+import com.heitorcolangelo.redditnews.ui.view.WarningView
 import com.heitorcolangelo.repository.model.Comment
 import kotlinx.android.synthetic.main.fragment_comments.*
 
@@ -36,6 +35,7 @@ class CommentsFragment : BaseFragment() {
         setupMoreCommentsView(txtMoreComments)
         setupRecyclerView(recyclerView)
         setupStateMachine(savedInstanceState?.getBundle(STATE_MACHINE))
+        setupErrorView(errorView)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -73,15 +73,6 @@ class CommentsFragment : BaseFragment() {
         }
     }
 
-    private fun moreCommentsIntent() = with(CustomTabsIntent.Builder()) {
-        this@CommentsFragment.context?.let {
-            setToolbarColor(ResourcesCompat.getColor(it.resources, R.color.colorPrimary, it.theme))
-            setStartAnimations(it, R.anim.slide_in_right, R.anim.slide_out_left)
-            setExitAnimations(it, R.anim.slide_in_left, R.anim.slide_out_right)
-        }
-        build()
-    }
-
     private fun setupRecyclerView(recyclerView: RecyclerView) = with(recyclerView) {
         val context = this@CommentsFragment.activity
         layoutManager = LinearLayoutManager(context)
@@ -112,6 +103,12 @@ class CommentsFragment : BaseFragment() {
                 visibles(errorView)
                 gones(loadingView, emptyView, recyclerView, txtMoreComments)
             }
+        }
+    }
+
+    private fun setupErrorView(view: WarningView) {
+        view.setOnClickListener {
+            stateMachine.changeState(LOADING_STATE)
         }
     }
 

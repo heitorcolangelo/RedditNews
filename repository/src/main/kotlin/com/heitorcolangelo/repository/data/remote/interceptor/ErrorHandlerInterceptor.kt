@@ -8,10 +8,13 @@ internal class ErrorHandlerInterceptor : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
-        val response = chain.proceed(request)
-        val code = response.code()
-
-        if (response.isSuccessful) return response
-        throw handleException(code)
+        try {
+            val response = chain.proceed(request)
+            val code = response.code()
+            if (response.isSuccessful) return response
+            throw handleException(code)
+        } catch (exception: Throwable) {
+            throw handleException(0)
+        }
     }
 }

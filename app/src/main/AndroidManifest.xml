@@ -21,6 +21,9 @@
         <activity
                 android:label=""
                 android:name=".feature.content.details.ContentDetailsActivity"/>
+
+        <!-- TEST ACTIVITY -->
+        <activity android:name=".base.TestActivity" />
     </application>
 
 </manifest>

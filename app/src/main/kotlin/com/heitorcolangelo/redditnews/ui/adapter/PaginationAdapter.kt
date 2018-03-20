@@ -34,6 +34,8 @@ class PaginationAdapter<T : Parcelable>(viewCreator: (context: Context) -> ViewB
             binder.txtTryAgain.visibility = if (hasError) VISIBLE else GONE
             binder.txtTryAgain.setOnClickListener({
                 nextPage?.let {
+                    hasError = false
+                    notifyItemChanged(itemCount - 1)
                     listener?.onLoadMore(it)
                 }
             })
@@ -44,6 +46,11 @@ class PaginationAdapter<T : Parcelable>(viewCreator: (context: Context) -> ViewB
         super.onAttachedToRecyclerView(recyclerView)
         recyclerView.clearOnChildAttachStateChangeListeners()
         recyclerView.addOnChildAttachStateChangeListener(childAttachListener())
+    }
+
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView)
+        recyclerView.clearOnChildAttachStateChangeListeners()
     }
 
     override fun saveInstanceState(): Bundle {
@@ -105,7 +112,7 @@ class PaginationAdapter<T : Parcelable>(viewCreator: (context: Context) -> ViewB
     fun failPage() {
         if (!hasLoadingItem) return
         hasError = true
-        notifyItemChanged(itemCount)
+        notifyItemChanged(itemCount - 1)
     }
 
     private fun insertLoadingItem() {
